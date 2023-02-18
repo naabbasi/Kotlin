@@ -1,0 +1,10 @@
+# Spring jpa configuration
+# https://medium.com/@jonashavers/how-to-create-database-test-data-for-spring-boot-applications-with-flyway-db-294a436db7ee
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2
+
+  profiles:
+    active: dev
