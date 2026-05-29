@@ -1,0 +1,9 @@
+spring:
+  jpa:
+    database: h2
+    show-sql: true
+    hibernate:
+      ddl-auto: update #create, create-drop wont execute the flyway migration
+
+  flyway:
+    locations: classpath:/db/migration/h2/complete,classpath:/db/migration/h2/testdata
