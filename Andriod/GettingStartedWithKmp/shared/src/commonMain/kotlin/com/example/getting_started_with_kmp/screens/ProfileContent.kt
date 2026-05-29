@@ -5,6 +5,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -14,7 +16,7 @@ fun ProfileContent() {
             .fillMaxSize()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Bottom
     ) {
         Card(
             modifier = Modifier.fillMaxWidth(),
@@ -26,12 +28,20 @@ fun ProfileContent() {
             ) {
                 Text(
                     text = "Profile",
-                    style = MaterialTheme.typography.headlineSmall
+                    style = MaterialTheme.typography.headlineSmall,
+                    textAlign = TextAlign.Center
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                Text("This is your profile tab")
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "This is your profile tab",
+                    textDecoration = TextDecoration.Underline,
+                    textAlign = TextAlign.Start)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text("All screens share the same state!")
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "All screens share the same state!",
+                    textAlign = TextAlign.End)
             }
         }
     }
