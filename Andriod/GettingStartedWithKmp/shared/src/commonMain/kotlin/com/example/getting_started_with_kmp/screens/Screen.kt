@@ -29,9 +29,10 @@ sealed class Screen(val title: String) {
     data object Home : Screen("Home")
     data object Items : Screen("My Items")
     data object Profile : Screen("Profile")
+    data object AdvancedHomeScreen : Screen("AdvancedHomeScreen")
 
     companion object {
-        val screenList = listOf(Home, Items, Profile)
+        val screenList = listOf(Home, Items, Profile, AdvancedHomeScreen)
     }
 }
 
@@ -154,6 +155,7 @@ fun MainScreen() {
                 )
 
                 Screen.Profile -> ProfileContent(savedCount = itemsList.size)
+                Screen.AdvancedHomeScreen -> AdvancedHomeScreen()
             }
         }
     }
