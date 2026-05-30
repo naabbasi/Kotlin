@@ -4,9 +4,17 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.List
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -20,16 +28,43 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import kotlinx.coroutines.delay
 
 // Define your screens as sealed class (like enum with state)
-sealed class Screen(val title: String) {
-    data object Dummy : Screen("Home")
-    data object Home : Screen("Home")
-    data object Items : Screen("My Items")
-    data object Profile : Screen("Profile")
-    data object AdvancedHomeScreen : Screen("AdvancedHomeScreen")
+sealed class Screen(
+    val title: String,
+    val selectedIcon: ImageVector,    // Icon when selected
+    val unselectedIcon: ImageVector   // Icon when not selected
+) {
+    data object Dummy : Screen(
+        title = "Home",
+        selectedIcon = Icons.Filled.Home,
+        unselectedIcon = Icons.Outlined.Home
+    )
+
+    data object Home : Screen(
+        title = "Home",
+        selectedIcon = Icons.Filled.Home,
+        unselectedIcon = Icons.Outlined.Home
+    )
+
+    data object Items : Screen(
+        title = "Home",
+        selectedIcon = Icons.Filled.List,
+        unselectedIcon = Icons.Outlined.List
+    )
+
+    data object Profile : Screen(
+        title = "Profile",
+        selectedIcon = Icons.Filled.Person,
+        unselectedIcon = Icons.Outlined.Person
+    )
+
+    data object AdvancedHomeScreen : Screen(
+        title = "AdvancedHomeScreen",
+        selectedIcon = Icons.Filled.Home,
+        unselectedIcon = Icons.Outlined.Home)
 
     companion object {
         val screenList = listOf(Home, Items, Profile, AdvancedHomeScreen)
@@ -60,68 +95,80 @@ fun MainScreen() {
             TopAppBar(
                 title = { Text(selectedTab.title) },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.DarkGray
+                    titleContentColor = MaterialTheme.colorScheme.primaryContainer,
+                    containerColor = MaterialTheme.colorScheme.primary
                 )
             )
         },
         bottomBar = {
-            // NavigationBar = Bottom tab bar
-            NavigationBar {
-                /*NavigationBarItem(
-                    icon = {
-                        Icon(
-                            if (selectedTab == Screen.Home)
-                                Icons.Default.Home
-                            else
-                                Icons.Outlined.Home,
-                            contentDescription = "Home"
-                        )
-                    },
-                    label = { Text("Home") },
-                    selected = selectedTab == Screen.Home,
-                    onClick = { selectedTab = Screen.Home }
-                )
-
-                NavigationBarItem(
-                    icon = {
-                        Icon(
-                            if (selectedTab == Screen.Items)
-                                Icons.Default.List
-                            else
-                                Icons.Outlined.List,
-                            contentDescription = "Items"
-                        )
-                    },
-                    label = { Text("Items") },
-                    selected = selectedTab == Screen.Items,
-                    onClick = { selectedTab = Screen.Items }
-                )
-
-                NavigationBarItem(
-                    icon = {
-                        Icon(
-                            if (selectedTab == Screen.Profile)
-                                Icons.Default.Person
-                            else
-                                Icons.Outlined.Person,
-                            contentDescription = "Profile"
-                        )
-                    },
-                    label = { Text("Profile") },
-                    selected = selectedTab == Screen.Profile,
-                    onClick = { selectedTab = Screen.Profile }
-                )*/
-
+            BottomAppBar(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.primary
+            ) {
+                // NavigationBar = Bottom tab bar
                 NavigationBar {
-                    Screen.screenList.forEach { screen ->  // Loop through all screens
-                        NavigationBarItem(
-                            icon = {
-                                Text(if (selectedTab == screen) "●" else "○")  // Simple icon
-                            },
-                            label = { Text(screen.title) },
-                            selected = selectedTab == screen,
-                            onClick = { selectedTab = screen }
-                        )
+                    /*NavigationBarItem(
+                        icon = {
+                            Icon(
+                                if (selectedTab == Screen.Home)
+                                    Icons.Default.Home
+                                else
+                                    Icons.Outlined.Home,
+                                contentDescription = "Home"
+                            )
+                        },
+                        label = { Text("Home") },
+                        selected = selectedTab == Screen.Home,
+                        onClick = { selectedTab = Screen.Home }
+                    )
+
+                    NavigationBarItem(
+                        icon = {
+                            Icon(
+                                if (selectedTab == Screen.Items)
+                                    Icons.Default.List
+                                else
+                                    Icons.Outlined.List,
+                                contentDescription = "Items"
+                            )
+                        },
+                        label = { Text("Items") },
+                        selected = selectedTab == Screen.Items,
+                        onClick = { selectedTab = Screen.Items }
+                    )
+
+                    NavigationBarItem(
+                        icon = {
+                            Icon(
+                                if (selectedTab == Screen.Profile)
+                                    Icons.Default.Person
+                                else
+                                    Icons.Outlined.Person,
+                                contentDescription = "Profile"
+                            )
+                        },
+                        label = { Text("Profile") },
+                        selected = selectedTab == Screen.Profile,
+                        onClick = { selectedTab = Screen.Profile }
+                    )*/
+
+                    NavigationBar {
+                        Screen.screenList.forEach { screen ->  // Loop through all screens
+                            NavigationBarItem(
+                                icon = {
+                                    Icon(
+                                        imageVector = if (selectedTab == screen)
+                                            screen.selectedIcon
+                                        else
+                                            screen.unselectedIcon,
+                                        contentDescription = screen.title
+                                    )
+                                },
+                                label = { Text(screen.title) },
+                                selected = selectedTab == screen,
+                                onClick = { selectedTab = screen }
+                            )
+                        }
                     }
                 }
             }
