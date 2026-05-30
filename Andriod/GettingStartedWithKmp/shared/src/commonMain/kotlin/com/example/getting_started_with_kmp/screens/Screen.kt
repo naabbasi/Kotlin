@@ -4,9 +4,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Category
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.outlined.Category
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.List
 import androidx.compose.material.icons.outlined.Person
@@ -50,7 +52,7 @@ sealed class Screen(
     )
 
     data object Items : Screen(
-        title = "Home",
+        title = "Items",
         selectedIcon = Icons.Filled.List,
         unselectedIcon = Icons.Outlined.List
     )
@@ -61,13 +63,14 @@ sealed class Screen(
         unselectedIcon = Icons.Outlined.Person
     )
 
-    data object AdvancedHomeScreen : Screen(
-        title = "AdvancedHomeScreen",
-        selectedIcon = Icons.Filled.Home,
-        unselectedIcon = Icons.Outlined.Home)
+    data object CategoriesScreen : Screen(
+        title = "Categories",
+        selectedIcon = Icons.Filled.Category,
+        unselectedIcon = Icons.Outlined.Category
+    )
 
     companion object {
-        val screenList = listOf(Home, Items, Profile, AdvancedHomeScreen)
+        val screenList = listOf(Home, Items, Profile, CategoriesScreen)
     }
 }
 
@@ -102,12 +105,12 @@ fun MainScreen() {
         },
         bottomBar = {
             BottomAppBar(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                contentColor = MaterialTheme.colorScheme.primary
+                /*containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.primary*/
             ) {
                 // NavigationBar = Bottom tab bar
-                NavigationBar {
-                    /*NavigationBarItem(
+                /*NavigationBar {
+                    NavigationBarItem(
                         icon = {
                             Icon(
                                 if (selectedTab == Screen.Home)
@@ -150,25 +153,28 @@ fun MainScreen() {
                         label = { Text("Profile") },
                         selected = selectedTab == Screen.Profile,
                         onClick = { selectedTab = Screen.Profile }
-                    )*/
+                    )
+                }*/
 
-                    NavigationBar {
-                        Screen.screenList.forEach { screen ->  // Loop through all screens
-                            NavigationBarItem(
-                                icon = {
-                                    Icon(
-                                        imageVector = if (selectedTab == screen)
-                                            screen.selectedIcon
-                                        else
-                                            screen.unselectedIcon,
-                                        contentDescription = screen.title
-                                    )
-                                },
-                                label = { Text(screen.title) },
-                                selected = selectedTab == screen,
-                                onClick = { selectedTab = screen }
-                            )
-                        }
+                NavigationBar(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    contentColor = MaterialTheme.colorScheme.primary
+                ) {
+                    Screen.screenList.forEach { screen ->  // Loop through all screens
+                        NavigationBarItem(
+                            icon = {
+                                Icon(
+                                    imageVector = if (selectedTab == screen)
+                                        screen.selectedIcon
+                                    else
+                                        screen.unselectedIcon,
+                                    contentDescription = screen.title
+                                )
+                            },
+                            label = { Text(screen.title) },
+                            selected = selectedTab == screen,
+                            onClick = { selectedTab = screen }
+                        )
                     }
                 }
             }
@@ -202,7 +208,7 @@ fun MainScreen() {
                 )
 
                 Screen.Profile -> ProfileContent(savedCount = itemsList.size)
-                Screen.AdvancedHomeScreen -> AdvancedHomeScreen()
+                Screen.CategoriesScreen -> CategoriesScreen()
             }
         }
     }

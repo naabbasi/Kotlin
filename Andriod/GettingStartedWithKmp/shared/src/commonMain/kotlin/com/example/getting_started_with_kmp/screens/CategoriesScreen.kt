@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AdvancedHomeScreen() {
+fun CategoriesScreen() {
     // Data for horizontal cards
     val categories = listOf("Electronics", "Clothing", "Books", "Sports", "Toys", "Home", "Beauty", "Food")
     
@@ -71,7 +71,7 @@ fun CategoryCard(category: String) {
             .height(120.dp),
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.tertiaryContainer
+            containerColor = MaterialTheme.colorScheme.tertiary
         )
     ) {
         Column(
@@ -82,7 +82,7 @@ fun CategoryCard(category: String) {
             Icon(
                 imageVector = Icons.Default.Star,
                 contentDescription = null,
-                modifier = Modifier.size(36.dp)
+                modifier = Modifier.size(16.dp)
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(category, style = MaterialTheme.typography.titleMedium)
@@ -139,8 +139,8 @@ fun CardWithVerticalList(title: String, items: List<String>, modifier: Modifier 
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(12.dp)
             )
-            
-            Divider()
+
+            HorizontalDivider()
             
             // Vertical scrolling content inside the card
             LazyColumn(
