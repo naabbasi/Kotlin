@@ -43,7 +43,7 @@ fun ItemsContent(
                     onClick = onAddItem,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Add to List")
+                    Text("Add to List (${itemsList.size} total)")
                 }
             }
         }

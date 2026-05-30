@@ -10,7 +10,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ProfileContent() {
+fun ProfileContent(savedCount: Int) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -36,12 +36,28 @@ fun ProfileContent() {
                     modifier = Modifier.fillMaxWidth(),
                     text = "This is your profile tab",
                     textDecoration = TextDecoration.Underline,
-                    textAlign = TextAlign.Start)
+                    textAlign = TextAlign.Start
+                )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = "All screens share the same state!",
-                    textAlign = TextAlign.End)
+                    textAlign = TextAlign.End
+                )
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(12.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "Total items added (${savedCount})",
+                    textAlign = TextAlign.End
+                )
             }
         }
     }

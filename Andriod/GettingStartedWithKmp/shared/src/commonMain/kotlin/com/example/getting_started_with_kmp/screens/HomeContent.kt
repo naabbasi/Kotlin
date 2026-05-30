@@ -2,9 +2,11 @@ package com.example.getting_started_with_kmp.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
@@ -39,19 +41,38 @@ fun HomeContent() {
         }
 
         Card(
-            modifier = Modifier.fillMaxWidth(),
-            border = BorderStroke(5.dp, Brush.linearGradient(
-                0.0f to Color.Red,
-                0.3f to Color.Green,
-                1.0f to Color.Blue,
-                start = Offset(0.0f, 50.0f),
-                end = Offset(0.0f, 100.0f)
-            )),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp),
+            border = BorderStroke(
+                1.dp, Brush.linearGradient(
+                    0.0f to Color.Green,
+                    0.3f to Color.Red,
+                    1.0f to Color.Blue,
+                    start = Offset(0.0f, 50.0f),
+                    end = Offset(0.0f, 100.0f)
+                )
+            ),
         ) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = "This is another card",
-                textAlign = TextAlign.Center)
+                textAlign = TextAlign.Center
+            )
+        }
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = "Item screen will launched after 5 mins, when app will launch first time",
+                textAlign = TextAlign.Center
+            )
         }
     }
 }
