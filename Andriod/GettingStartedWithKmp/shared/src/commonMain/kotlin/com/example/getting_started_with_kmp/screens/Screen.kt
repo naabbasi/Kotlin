@@ -3,14 +3,18 @@ package com.example.getting_started_with_kmp.screens
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.automirrored.outlined.List
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Category
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.ModeComment
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.Category
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.List
+import androidx.compose.material.icons.outlined.ModeComment
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -53,14 +57,8 @@ sealed class Screen(
 
     data object Items : Screen(
         title = "Items",
-        selectedIcon = Icons.Filled.List,
-        unselectedIcon = Icons.Outlined.List
-    )
-
-    data object Profile : Screen(
-        title = "Profile",
-        selectedIcon = Icons.Filled.Person,
-        unselectedIcon = Icons.Outlined.Person
+        selectedIcon = Icons.AutoMirrored.Filled.List,
+        unselectedIcon = Icons.AutoMirrored.Outlined.List
     )
 
     data object CategoriesScreen : Screen(
@@ -69,8 +67,20 @@ sealed class Screen(
         unselectedIcon = Icons.Outlined.Category
     )
 
+    data object Profile : Screen(
+        title = "Profile",
+        selectedIcon = Icons.Filled.Person,
+        unselectedIcon = Icons.Outlined.Person
+    )
+
+    data object Post : Screen(
+        title = "Post",
+        selectedIcon = Icons.Filled.ModeComment,
+        unselectedIcon = Icons.Outlined.ModeComment
+    )
+
     companion object {
-        val screenList = listOf(Home, Items, Profile, CategoriesScreen)
+        val screenList = listOf(Home, Items, CategoriesScreen, Post, Profile)
     }
 }
 
@@ -104,12 +114,12 @@ fun MainScreen() {
             )
         },
         bottomBar = {
-            BottomAppBar(
-                /*containerColor = MaterialTheme.colorScheme.primaryContainer,
-                contentColor = MaterialTheme.colorScheme.primary*/
+            /*BottomAppBar(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.primary
             ) {
                 // NavigationBar = Bottom tab bar
-                /*NavigationBar {
+                NavigationBar {
                     NavigationBarItem(
                         icon = {
                             Icon(
@@ -154,28 +164,28 @@ fun MainScreen() {
                         selected = selectedTab == Screen.Profile,
                         onClick = { selectedTab = Screen.Profile }
                     )
-                }*/
+                }
+            }*/
 
-                NavigationBar(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    contentColor = MaterialTheme.colorScheme.primary
-                ) {
-                    Screen.screenList.forEach { screen ->  // Loop through all screens
-                        NavigationBarItem(
-                            icon = {
-                                Icon(
-                                    imageVector = if (selectedTab == screen)
-                                        screen.selectedIcon
-                                    else
-                                        screen.unselectedIcon,
-                                    contentDescription = screen.title
-                                )
-                            },
-                            label = { Text(screen.title) },
-                            selected = selectedTab == screen,
-                            onClick = { selectedTab = screen }
-                        )
-                    }
+            NavigationBar(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.primary
+            ) {
+                Screen.screenList.forEach { screen ->  // Loop through all screens
+                    NavigationBarItem(
+                        icon = {
+                            Icon(
+                                imageVector = if (selectedTab == screen)
+                                    screen.selectedIcon
+                                else
+                                    screen.unselectedIcon,
+                                contentDescription = screen.title
+                            )
+                        },
+                        label = { Text(screen.title) },
+                        selected = selectedTab == screen,
+                        onClick = { selectedTab = screen }
+                    )
                 }
             }
         },
@@ -207,8 +217,9 @@ fun MainScreen() {
                     onDeleteItem = { item -> itemsList = itemsList - item }
                 )
 
-                Screen.Profile -> ProfileContent(savedCount = itemsList.size)
                 Screen.CategoriesScreen -> CategoriesScreen()
+                Screen.Profile -> ProfileContent(savedCount = itemsList.size)
+                Screen.Post -> PostsContent()
             }
         }
     }
